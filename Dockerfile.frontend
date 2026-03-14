@@ -1,0 +1,15 @@
+# Multi-stage Dockerfile for Astro frontend
+FROM node:18 AS build
+WORKDIR /app
+COPY package*.json ./
+COPY . .
+RUN npm install && npm run build
+
+# Production image
+FROM node:18-alpine AS prod
+WORKDIR /app
+COPY --from=build /app/dist ./dist
+COPY --from=build /app/package*.json ./
+RUN npm install --production
+EXPOSE 3000
+CMD ["npx", "serve", "dist"]

@@ -1,0 +1,16 @@
+# Dev Dockerfile for Astro with pnpm
+FROM node:20-slim
+WORKDIR /app
+
+# Install pnpm
+RUN npm install -g pnpm
+
+# Only copy lockfile and package.json first for better caching
+COPY package.json pnpm-lock.yaml* ./
+RUN pnpm install
+
+# The code will be mounted as a volume in dev, but copy for initial build
+COPY . .
+
+EXPOSE 3000
+CMD ["pnpm", "dev", "--host"]
