@@ -139,6 +139,10 @@ const { title } = Astro.props;
             <span class="nav-icon">🤖</span>
             <span>Agent Chat</span>
           </a>
+          <a href="/explain" class="nav-item">
+            <span class="nav-icon">🔄</span>
+            <span>Explain Loop</span>
+          </a>
           <a href="/dashboard" class="nav-item">
             <span class="nav-icon">📊</span>
             <span>Dashboard</span>
@@ -159,20 +163,38 @@ const { title } = Astro.props;
             <span class="nav-icon">⚙️</span>
             <span>Settings</span>
           </a>
+          <button id="logoutBtn" class="nav-item" style="background:none; border:none; width:100%; cursor:pointer; margin-top: 2rem; color: #ff4d4d;">
+            <span class="nav-icon">🚪</span>
+            <span>Logout</span>
+          </button>
         </nav>
       </aside>
       
       <main class="main-content">
-        <header class="top-bar">
-          <slot name="header">
-            <h1 class="page-title">{title}</h1>
-          </slot>
-          <a href="/" class="back-link">← Back to Home</a>
-        </header>
+...
         <div class="content">
           <slot />
         </div>
       </main>
     </div>
+
+    <script>
+      import { ApiClient } from '../lib/api';
+      
+      const logoutBtn = document.getElementById('logoutBtn');
+      logoutBtn?.addEventListener('click', () => {
+        ApiClient.logout();
+        window.location.href = '/login';
+      });
+
+      // Highlight active nav item
+      const currentPath = window.location.pathname;
+      const navItems = document.querySelectorAll('.nav-item');
+      navItems.forEach(item => {
+        if (item instanceof HTMLAnchorElement && item.getAttribute('href') === currentPath) {
+          item.classList.add('active');
+        }
+      });
+    </script>
   </body>
 </html>
