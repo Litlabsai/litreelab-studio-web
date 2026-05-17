@@ -7,14 +7,17 @@ body {
     color: #333;
     text-align: center;
 }
+
 header {
     background-color: #4CAF50;
     color: white;
     padding: 1rem 0;
 }
+
 main {
     padding: 2rem;
 }
+
 footer {
     background-color: #222;
     color: #ccc;

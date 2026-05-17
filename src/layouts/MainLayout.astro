@@ -12,7 +12,7 @@ const { title } = Astro.props;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
-    <title>{title} | HomeBase 3.0</title>
+    <title>{title} | LiTree Lab Studio™</title>
     <style>
       * {
         margin: 0;
@@ -113,7 +113,7 @@ const { title } = Astro.props;
   <body>
     <div class="app">
       <aside class="sidebar">
-        <a href="/" class="logo">🏠 HomeBase 3.0</a>
+        <a href="/" class="logo">🧬 LiTree Lab Studio™</a>
         <nav class="nav-menu">
           <a href="/friends" class="nav-item">
             <span class="nav-icon">👥</span>
@@ -178,9 +178,13 @@ const { title } = Astro.props;
       </main>
     </div>
 
-    <script>
+    <script type="module">
       import { ApiClient } from '../lib/api';
-      
+      import { loadAnalytics } from '../lib/analytics';
+      // Analytics
+      loadAnalytics();
+
+      // Logout
       const logoutBtn = document.getElementById('logoutBtn');
       logoutBtn?.addEventListener('click', () => {
         ApiClient.logout();

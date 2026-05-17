@@ -1,5 +1,5 @@
 ---
-const title = "LiTLaB Social Hub";
+const title = "LiTree Lab Studio Social Hub";
 ---
 
 <html lang="en">
@@ -98,7 +98,7 @@ const title = "LiTLaB Social Hub";
   <body>
     <div class="background-glow"></div>
     <nav class="navbar">
-      <div class="logo">LiTLaB Social Hub</div>
+      <div class="logo">LiTree Lab Studio Social Hub</div>
       <div class="nav-links">
         <button class="btn btn-primary" onclick="window.location.href='/studio'">+ Create Artifact</button>
       </div>
@@ -108,21 +108,32 @@ const title = "LiTLaB Social Hub";
       <div class="empty-state">Initializing neural feed...</div>
     </main>
 
-    <script>
-      async function loadFeed() {
+    <script type="module">
+      // TypeScript type annotations for safety
+      type Post = {
+        id: string;
+        author: string;
+        type: string;
+        prompt: string;
+        code: string;
+        timestamp?: string;
+      };
+
+      async function loadFeed(): Promise<void> {
         const feedEl = document.getElementById('feed');
+        if (!feedEl) return;
         try {
           const response = await fetch('http://localhost:8080/api/social/feed', {
               headers: { 'X-API-Key': 'o49eSUdxJehy05JxECmP33I9GQLaQCh0pYaGk7aXeok' }
           });
-          const posts = await response.json();
+          const posts: Post[] = await response.json();
 
-          if (posts.length === 0) {
+          if (!Array.isArray(posts) || posts.length === 0) {
             feedEl.innerHTML = '<div class="empty-state">The void is silent. Be the first to publish an artifact.</div>';
             return;
           }
 
-          feedEl.innerHTML = posts.map(post => `
+          feedEl.innerHTML = posts.map((post: Post) => `
             <div class="post-card">
               <div class="post-header">
                 <div class="author-info">
@@ -149,8 +160,7 @@ const title = "LiTLaB Social Hub";
         }
       }
 
-      window.forkPost = (id) => {
-        // Implementation for forking would go here - e.g. redirect to studio with post ID
+      (window as any).forkPost = (id: string) => {
         window.location.href = `/studio?fork=${id}`;
       };
 
