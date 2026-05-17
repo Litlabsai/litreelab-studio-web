@@ -1,5 +1,21 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
+import { auth } from '../lib/firebaseConfig';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+
+let email = '';
+let password = '';
+let errorMessage = '';
+
+async function handleLogin(event) {
+  event.preventDefault();
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+    alert('Login successful!');
+  } catch (error) {
+    errorMessage = error.message;
+  }
+}
 ---
 
 <MainLayout title="Login">
@@ -23,9 +39,10 @@ import MainLayout from '../layouts/MainLayout.astro';
 
         <div id="errorMessage" class="error-message"></div>
 
-        <button id="loginBtn" class="login-btn">
+        <button id="loginBtn" class="login-btn" on:click={handleLogin}>
           Log In
         </button>
+        {errorMessage && <p class="error-message">{errorMessage}</p>
       </div>
     </div>
   </div>

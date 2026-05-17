@@ -1,5 +1,16 @@
 ---
 const title = "LiTree Lab Studio Social Hub";
+import { collection, getFirestore, onSnapshot } from 'firebase/firestore';
+
+const db = getFirestore();
+const posts = [];
+
+onSnapshot(collection(db, 'posts'), (snapshot) => {
+  posts.length = 0; // Clear the array
+  snapshot.forEach((doc) => {
+    posts.push({ id: doc.id, ...doc.data() });
+  });
+});
 ---
 
 <html lang="en">
@@ -96,6 +107,17 @@ const title = "LiTree Lab Studio Social Hub";
     </style>
   </head>
   <body>
+    <div class="feed-container">
+      <h1>Feed</h1>
+      <ul>
+        {posts.map((post) => (
+          <li key={post.id}>
+            <h2>{post.title}</h2>
+            <p>{post.content}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
     <div class="background-glow"></div>
     <nav class="navbar">
       <div class="logo">LiTree Lab Studio Social Hub</div>
