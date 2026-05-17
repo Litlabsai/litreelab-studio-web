@@ -19,6 +19,16 @@ async function handleLogin(event) {
 ---
 
 <MainLayout title="Login">
+  <script>
+    import { auth } from '../lib/firebase';
+    import { onAuthStateChanged } from 'firebase/auth';
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        document.querySelector('.login-container').innerHTML = `<h2>Welcome, ${user.email}</h2>`;
+      }
+    });
+  </script>
   <div class="login-container">
     <div class="login-card">
       <div class="login-header">

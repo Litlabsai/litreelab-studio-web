@@ -16,3 +16,9 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
+
+// Fetch user profile data
+export async function getUserProfile(uid: string) {
+  const userDoc = await db.collection('users').doc(uid).get();
+  return userDoc.exists ? userDoc.data() : null;
+}

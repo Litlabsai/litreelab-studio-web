@@ -1,4 +1,6 @@
 ---
+import MainLayout from '../layouts/MainLayout.astro';
+
 const features = [
   { name: 'Social Hub', icon: '🌌', href: '/feed', desc: 'Interact with AI micro-apps & artifacts' },
   { name: 'AI Studio', icon: '🎨', href: '/studio', desc: 'Generate artifacts with LiTree Lab Studio' },
@@ -9,6 +11,34 @@ const features = [
 ];
 ---
 
+<MainLayout>
+  <div class="auth-container">
+    <div id="auth-section">
+      <script>
+        import { auth } from '../lib/firebase';
+        import { onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+
+        let user = null;
+        onAuthStateChanged(auth, (currentUser) => {
+          user = currentUser;
+          document.getElementById('auth-section').innerHTML = user
+            ? `<h2>Welcome, ${user.email}</h2><button onclick="signOut(auth)">Logout</button>`
+            : `<form onsubmit="handleLogin(event)">
+                <input type="email" id="email" placeholder="Email" required />
+                <input type="password" id="password" placeholder="Password" required />
+                <button type="submit">Login</button>
+              </form>`;
+        });
+
+        function handleLogin(event) {
+          event.preventDefault();
+          const email = document.getElementById('email').value;
+          const password = document.getElementById('password').value;
+          signInWithEmailAndPassword(auth, email, password).catch(console.error);
+        }
+      </script>
+    </div>
+  </div>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -18,6 +48,8 @@ const features = [
     <meta name="generator" content={Astro.generator} />
     <title>LiTree Lab Studio™</title>
     <style>
+    /* TailwindCSS Enhancements */
+    @apply bg-gradient-to-b from-blue-900 via-indigo-800 to-purple-900 text-gray-100;
       * {
         margin: 0;
         padding: 0;
@@ -164,6 +196,11 @@ const features = [
     </section>
 
     <section class="features">
+
+    <!-- Recommendations Integration -->
+    <div class="recommendations-wrapper">
+      <Recommendations />
+    </div>
       {features.map((feature) => (
         <a href={feature.href} class="feature-card">
           <div class="feature-icon">{feature.icon}</div>
@@ -180,3 +217,4 @@ const features = [
     <!-- Firebase login UI will be added here -->
   </body>
 </html>
+</MainLayout>

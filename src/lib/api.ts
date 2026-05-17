@@ -3,7 +3,7 @@
  * Handles authenticated requests to the FastAPI backend
  */
 
-export const API_BASE_URL = import.meta.env.PUBLIC_BACKEND_URL || 'http://localhost:8000';
+export const API_BASE_URL = import.meta.env.PUBLIC_BACKEND_URL || 'https://api.litlabs.net';
 
 export class ApiClient {
     private static getToken(): string | null {
@@ -70,7 +70,7 @@ export class ApiClient {
      * Chat with the AI Agent
      */
     static async chat(message: string, model?: string): Promise<{ reply: string, model_used: string }> {
-        const response = await fetch(`${API_BASE_URL}/api/agent/chat`, {
+        `https://ollama.litlabs.net/api/chat`
             method: 'POST',
             headers: this.getHeaders(),
             body: JSON.stringify({ message, model }),

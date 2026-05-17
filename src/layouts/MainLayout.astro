@@ -14,10 +14,29 @@ const { title } = Astro.props;
     <meta name="generator" content={Astro.generator} />
     <title>{title} | LiTree Lab Studio™</title>
     <style>
+    /* TailwindCSS Enhancements */
+    @apply bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-white;
       * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
+      }
+      .app {
+        display: flex;
+        min-height: 100vh;
+      }
+      .sidebar {
+        width: 260px;
+        background: rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(10px);
+        border-right: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 1.5rem;
+      }
+      .header {
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(10px);
+        padding: 1rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       }
       body {
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
@@ -111,6 +130,45 @@ const { title } = Astro.props;
     </style>
   </head>
   <body>
+      <div class="app">
+        <nav class="sidebar">
+                <div class="profile flex items-center mb-4">
+                  <img src="/path/to/profile-pic.jpg" alt="Profile Picture" class="w-16 h-16 rounded-full mr-4" />
+                  <div>
+                    <h3 class="text-lg font-bold">User Name</h3>
+                    <p class="text-sm text-gray-400">@username</p>
+                  </div>
+                </div>
+                <h2 class="logo">LiTree Lab Studio</h2>
+                <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/feed">Feed</a></li>
+            <li><a href="/profile">Profile</a></li>
+            <li><a href="/settings">Settings</a></li>
+          </ul>
+        </nav>
+        <div class="content">
+          <header class="header flex justify-between items-center">
+                    <h1>Welcome to LiTree Lab Studio</h1>
+                    <div class="settings-dropdown relative">
+                      <button class="settings-btn bg-gray-700 text-white px-4 py-2 rounded">Settings</button>
+                      <ul class="dropdown-menu absolute right-0 mt-2 bg-white text-black shadow-lg hidden">
+                        <li><a href="/profile" class="block px-4 py-2 hover:bg-gray-200">Profile</a></li>
+                        <li><a href="/settings" class="block px-4 py-2 hover:bg-gray-200">Settings</a></li>
+                        <li><a href="/logout" class="block px-4 py-2 hover:bg-gray-200">Logout</a></li>
+                      </ul>
+                    </div>
+                  </header>
+          <main>
+            <slot />
+
+            <!-- Chatbot Integration -->
+            <div class="chatbot-wrapper">
+              <Chatbot />
+            </div>
+          </main>
+        </div>
+      </div>
     <div class="app">
       <aside class="sidebar">
         <a href="/" class="logo">🧬 LiTree Lab Studio™</a>
