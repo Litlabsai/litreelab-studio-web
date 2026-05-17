@@ -20,18 +20,15 @@
     "@types/mocha": "^10.0.10",
     "@types/node": "^25.8.0",
     "@types/vscode": "^1.120.0",
-    "@vscode/test-electron": "^2.5.2",
-    "stylelint": "^17.11.1",
-    "stylelint-config-standard": "^40.0.0",
     "typescript": "^5.9.3",
     "wrangler": "^4.92.0"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^13.5.1",
-    "@tootallnate/once": "^3.0.1",
     "astro": "^6.3.3",
     "firebase": "^12.13.0",
     "node-fetch": "^3.3.2",
-    "say": "^0.16.0"
+    "say": "^0.16.0",
+    "vscode": "^1.1.36"
   }
 }
